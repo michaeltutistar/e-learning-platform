@@ -1,0 +1,13 @@
+from flask_sqlalchemy import SQLAlchemy
+
+# Instancia global de SQLAlchemy
+db = SQLAlchemy()
+
+# Importar todos los modelos aquí para evitar importaciones circulares
+from .user import User
+from .curso import Curso
+from .inscripcion import Inscripcion
+from .log_actividad import LogActividad
+from .modulo import Modulo
+from .leccion import Leccion
+from .recurso import Recurso 
