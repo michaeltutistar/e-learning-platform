@@ -8,8 +8,13 @@ class User(db.Model):
     nombre = db.Column(db.String(100), nullable=False)
     apellido = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    telefono = db.Column(db.String(20), nullable=True)
+    fecha_nacimiento = db.Column(db.Date, nullable=True)
+    pais = db.Column(db.String(100), nullable=True)
+    ciudad = db.Column(db.String(100), nullable=True)
+    bio = db.Column(db.Text, nullable=True)
     tipo_documento = db.Column(db.String(50), nullable=False)
-    numero_documento = db.Column(db.String(20), nullable=False)
+    numero_documento = db.Column(db.String(20), unique=True, nullable=False)
     documento_pdf = db.Column(db.LargeBinary, nullable=True)
     documento_pdf_nombre = db.Column(db.String(255), nullable=True)
     requisitos_pdf = db.Column(db.LargeBinary, nullable=True)
@@ -21,6 +26,7 @@ class User(db.Model):
     estado_cuenta = db.Column(db.String(20), default='inactiva')
     token_reset = db.Column(db.String(100), nullable=True)
     token_reset_expira = db.Column(db.DateTime, nullable=True)
+    convocatoria = db.Column(db.String(20), nullable=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -42,6 +48,11 @@ class User(db.Model):
             'nombre': self.nombre,
             'apellido': self.apellido,
             'email': self.email,
+            'telefono': self.telefono,
+            'fecha_nacimiento': self.fecha_nacimiento.isoformat() if self.fecha_nacimiento else None,
+            'pais': self.pais,
+            'ciudad': self.ciudad,
+            'bio': self.bio,
             'tipo_documento': self.tipo_documento,
             'numero_documento': self.numero_documento,
             'documento_pdf_nombre': self.documento_pdf_nombre,
@@ -49,5 +60,6 @@ class User(db.Model):
             'rol': self.rol,
             'fecha_creacion': self.fecha_creacion.isoformat() if self.fecha_creacion else None,
             'fecha_actualizacion': self.fecha_actualizacion.isoformat() if self.fecha_actualizacion else None,
-            'estado_cuenta': self.estado_cuenta
+            'estado_cuenta': self.estado_cuenta,
+            'convocatoria': self.convocatoria
         }

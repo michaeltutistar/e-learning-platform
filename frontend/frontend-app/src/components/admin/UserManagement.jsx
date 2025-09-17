@@ -317,6 +317,9 @@ const UserManagement = () => {
                   Documento
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Convocatoria
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Rol
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -358,6 +361,9 @@ const UserManagement = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {user.tipo_documento} - {user.numero_documento}
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {user.convocatoria ? `Conv. ${user.convocatoria}` : '-'}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getRoleBadge(user.rol)}`}>
                       {user.rol}
@@ -391,6 +397,20 @@ const UserManagement = () => {
                         <option value="instructor">Instructor</option>
                         <option value="admin">Admin</option>
                       </select>
+                      <button
+                        onClick={() => window.open(`/api/admin/users/${user.id}/documento`, '_blank')}
+                        className="text-xs border border-gray-300 rounded px-2 py-1 hover:bg-gray-50"
+                        title="Ver documento PDF"
+                      >
+                        Documento
+                      </button>
+                      <button
+                        onClick={() => window.open(`/api/admin/users/${user.id}/requisitos`, '_blank')}
+                        className="text-xs border border-gray-300 rounded px-2 py-1 hover:bg-gray-50"
+                        title="Ver requisitos PDF"
+                      >
+                        Requisitos
+                      </button>
                     </div>
                   </td>
                 </tr>

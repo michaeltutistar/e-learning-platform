@@ -18,7 +18,8 @@ const RegisterPage = () => {
     tipo_documento: '',
     numero_documento: '',
     password: '',
-    confirm_password: ''
+    confirm_password: '',
+    convocatoria: ''
   })
   const [documentoPdf, setDocumentoPdf] = useState(null)
   const [requisitosPdf, setRequisitosPdf] = useState(null)
@@ -115,6 +116,10 @@ const RegisterPage = () => {
       newErrors.confirm_password = 'Las contraseñas no coinciden'
     }
 
+    if (!formData.convocatoria) {
+      newErrors.convocatoria = 'La convocatoria es obligatoria'
+    }
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -182,7 +187,8 @@ const RegisterPage = () => {
           tipo_documento: '',
           numero_documento: '',
           password: '',
-          confirm_password: ''
+          confirm_password: '',
+          convocatoria: ''
         })
         setDocumentoPdf(null)
         setRequisitosPdf(null)
@@ -242,6 +248,7 @@ const RegisterPage = () => {
                 </Alert>
               )}
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Nombre */}
               <div className="space-y-2">
                 <Label htmlFor="nombre">Nombre *</Label>
@@ -305,7 +312,7 @@ const RegisterPage = () => {
                     }
                   }}
                 >
-                  <SelectTrigger className={errors.tipo_documento ? 'border-red-500' : ''}>
+                  <SelectTrigger className={(errors.tipo_documento ? 'border-red-500 ' : '') + 'w-full'}>
                     <SelectValue placeholder="Selecciona el tipo de documento" />
                   </SelectTrigger>
                   <SelectContent>
@@ -339,7 +346,7 @@ const RegisterPage = () => {
               </div>
 
               {/* Documento PDF */}
-              <div className="space-y-2">
+              <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="documento_pdf">Documento de Identidad (PDF) *</Label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-green-500 transition-colors">
                   {!documentoPdf ? (
@@ -396,7 +403,7 @@ const RegisterPage = () => {
               </div>
 
               {/* Requisitos PDF */}
-              <div className="space-y-2">
+              <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="requisitos_pdf">Requisitos de Inscripción (PDF) *</Label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-green-500 transition-colors">
                   {!requisitosPdf ? (
@@ -510,6 +517,32 @@ const RegisterPage = () => {
                 {errors.confirm_password && (
                   <p className="text-sm text-red-600">{errors.confirm_password}</p>
                 )}
+              </div>
+
+              {/* Convocatoria */}
+              <div className="space-y-2">
+                <Label htmlFor="convocatoria">Convocatoria *</Label>
+                <Select
+                  value={formData.convocatoria}
+                  onValueChange={(value) => {
+                    setFormData(prev => ({ ...prev, convocatoria: value }))
+                    if (errors.convocatoria) {
+                      setErrors(prev => ({ ...prev, convocatoria: '' }))
+                    }
+                  }}
+                >
+                  <SelectTrigger className={(errors.convocatoria ? 'border-red-500 ' : '') + 'w-full'}>
+                    <SelectValue placeholder="Selecciona la convocatoria" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">Convocatoria 1</SelectItem>
+                    <SelectItem value="2">Convocatoria 2</SelectItem>
+                  </SelectContent>
+                </Select>
+                {errors.convocatoria && (
+                  <p className="text-sm text-red-600">{errors.convocatoria}</p>
+                )}
+              </div>
               </div>
 
               {/* Botón de registro */}

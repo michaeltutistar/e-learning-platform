@@ -1,8 +1,9 @@
-from flask import Blueprint, jsonify, request, session
+from flask import Blueprint, jsonify, request, session, send_file
 from src.models import db, User, Curso, Inscripcion, LogActividad
 from datetime import datetime, timedelta
 import csv
 import io
+import tempfile
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -304,7 +305,7 @@ def export_users():
         # Header
         writer.writerow([
             'ID', 'Nombre', 'Apellido', 'Email', 'Tipo Documento', 
-            'Número Documento', 'Rol', 'Estado Cuenta', 'Fecha Creación'
+            'Número Documento', 'Rol', 'Estado Cuenta', 'Fecha Creación', 'Convocatoria'
         ])
         
         # Datos
@@ -318,7 +319,8 @@ def export_users():
                 user.numero_documento,
                 user.rol,
                 user.estado_cuenta,
-                user.fecha_creacion.strftime('%Y-%m-%d %H:%M:%S') if user.fecha_creacion else ''
+                user.fecha_creacion.strftime('%Y-%m-%d %H:%M:%S') if user.fecha_creacion else '',
+                user.convocatoria or ''
             ])
         
         # Registrar actividad (temporalmente comentado por problemas de mapeo)
@@ -624,3 +626,41 @@ def get_instructors():
         
     except Exception as e:
         return jsonify({'error': f'Error al obtener instructores: {str(e)}'}), 500 
+
+@admin_bp.route('/users/<int:user_id>/documento', methods=['GET'])
+@require_admin
+def download_user_documento(user_id):
+    """Descargar/ver documento de identidad PDF del usuario"""
+    try:
+        user = User.query.get_or_404(user_id)
+        if not user.documento_pdf:
+            return jsonify({'error': 'El usuario no tiene documento PDF cargado'}), 404
+        
+        tmp = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
+        tmp.write(user.documento_pdf)
+        tmp.flush()
+        tmp.seek(0)
+        
+        filename = user.documento_pdf_nombre or 'documento.pdf'
+        return send_file(tmp.name, mimetype='application/pdf', as_attachment=False, download_name=filename)
+    except Exception as e:
+        return jsonify({'error': f'Error al descargar documento: {str(e)}'}), 500
+
+@admin_bp.route('/users/<int:user_id>/requisitos', methods=['GET'])
+@require_admin
+def download_user_requisitos(user_id):
+    """Descargar/ver requisitos PDF del usuario"""
+    try:
+        user = User.query.get_or_404(user_id)
+        if not user.requisitos_pdf:
+            return jsonify({'error': 'El usuario no tiene requisitos PDF cargados'}), 404
+        
+        tmp = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
+        tmp.write(user.requisitos_pdf)
+        tmp.flush()
+        tmp.seek(0)
+        
+        filename = user.requisitos_pdf_nombre or 'requisitos.pdf'
+        return send_file(tmp.name, mimetype='application/pdf', as_attachment=False, download_name=filename)
+    except Exception as e:
+        return jsonify({'error': f'Error al descargar requisitos: {str(e)}'}), 500 

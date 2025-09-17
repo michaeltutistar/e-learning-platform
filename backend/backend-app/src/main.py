@@ -10,6 +10,8 @@ from src.routes.user import user_bp
 from src.routes.admin import admin_bp
 from src.routes.content import content_bp
 from src.routes.resources import resources_bp
+from src.routes.instructor import instructor_bp
+from src.routes.student import student_bp
 from src.config import config
 
 # Determinar el entorno
@@ -36,6 +38,8 @@ app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(content_bp, url_prefix='/api/content')
 app.register_blueprint(resources_bp, url_prefix='/api/resources')
+app.register_blueprint(instructor_bp, url_prefix='/api/instructor')
+app.register_blueprint(student_bp, url_prefix='/api/student')
 
 # Configurar base de datos directamente para producción
 if os.getenv('FLASK_ENV', '').strip() == 'production':

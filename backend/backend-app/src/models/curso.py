@@ -18,6 +18,7 @@ class Curso(db.Model):
     categoria = db.Column(db.String(100), nullable=True)
     imagen_url = db.Column(db.String(500), nullable=True)
     max_estudiantes = db.Column(db.Integer, default=0)  # 0 = sin límite
+    convocatoria = db.Column(db.String(20), nullable=True)
     
     # Relaciones (temporalmente comentadas para evitar importaciones circulares)
     # instructor = db.relationship('User', backref='cursos_instructor', foreign_keys=[instructor_id])

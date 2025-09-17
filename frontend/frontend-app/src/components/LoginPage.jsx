@@ -85,8 +85,12 @@ const LoginPage = () => {
         // Redirigir según el rol del usuario
         if (data.user && data.user.rol === 'admin') {
           navigate('/admin')
+        } else if (data.user && data.user.rol === 'instructor') {
+          navigate('/instructor/dashboard')
+        } else if (data.user && data.user.rol === 'estudiante') {
+          navigate('/student/dashboard')
         } else {
-          navigate('/dashboard')
+          navigate('/student/dashboard')
         }
       } else {
         if (data.error) {

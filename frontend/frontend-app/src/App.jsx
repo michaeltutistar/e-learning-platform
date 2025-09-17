@@ -6,6 +6,8 @@ import RegisterPage from './components/RegisterPage'
 import ForgotPasswordPage from './components/ForgotPasswordPage'
 import ResetPasswordPage from './components/ResetPasswordPage'
 import AdminDashboard from './components/AdminDashboard'
+import InstructorRoutes from './components/instructor/InstructorRoutes'
+import StudentRoutes from './components/student/StudentRoutes'
 import './App.css'
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/instructor/*" element={<InstructorRoutes />} />
+          <Route path="/student/*" element={<StudentRoutes />} />
         </Routes>
       </div>
     </Router>

@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { BookOpen, Users, Award, Clock, CheckCircle, Star } from 'lucide-react'
 import logoGobernacion from '../assets/logo-gobernacion.png'
 import logoGov from '../assets/logo-gov.png'
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel'
 
 const LandingPage = () => {
   return (
@@ -17,11 +18,19 @@ const LandingPage = () => {
               <img src={logoGobernacion} alt="Gobernación de Nariño" className="h-12" />
               <img src={logoGov} alt="GOV.CO" className="h-8" />
             </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#inicio" className="text-gray-700 hover:text-green-600 transition-colors">Inicio</a>
-              <a href="#caracteristicas" className="text-gray-700 hover:text-green-600 transition-colors">Características</a>
-              <a href="#beneficios" className="text-gray-700 hover:text-green-600 transition-colors">Beneficios</a>
-              <a href="#contacto" className="text-gray-700 hover:text-green-600 transition-colors">Contacto</a>
+            <nav className="hidden md:flex space-x-6 items-center">
+              <a href="#inicio" className="nav-3d" data-label="Inicio">
+                <span>Inicio</span><span>Inicio</span><span>Inicio</span><span>Inicio</span>
+              </a>
+              <a href="#caracteristicas" className="nav-3d" data-label="Características">
+                <span>Características</span><span>Características</span><span>Características</span><span>Características</span>
+              </a>
+              <a href="#beneficios" className="nav-3d" data-label="Beneficios">
+                <span>Beneficios</span><span>Beneficios</span><span>Beneficios</span><span>Beneficios</span>
+              </a>
+              <a href="#contacto" className="nav-3d" data-label="Contacto">
+                <span>Contacto</span><span>Contacto</span><span>Contacto</span><span>Contacto</span>
+              </a>
             </nav>
             <div className="flex space-x-4">
               <Link to="/login">
@@ -40,27 +49,88 @@ const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="bg-gradient-to-br from-yellow-400 via-yellow-300 to-green-500 py-20">
+      <section id="inicio" className="hero-diagonals bg-gradient-to-br from-yellow-400 via-yellow-300 to-green-500 py-16">
+        <div className="diag"></div>
+        <div className="diag diag2"></div>
+        <div className="diag diag3"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-              Plataforma E-Learning
-              <span className="block text-green-700">Gobernación de Nariño</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
-              Fortalece tus conocimientos y habilidades con nuestra plataforma educativa digital. 
-              Accede a cursos de calidad diseñados para el desarrollo integral de los nariñenses.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/register">
-                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg">
-                  Comenzar Ahora
-                </Button>
-              </Link>
-              <Button size="lg" variant="outline" className="border-gray-700 text-gray-700 hover:bg-gray-50 px-8 py-3 text-lg">
-                Conocer Más
-              </Button>
-            </div>
+          <div className="relative z-10">
+          <Carousel className="max-w-4xl mx-auto" autoPlay={true} autoPlayInterval={6000}>
+            <CarouselContent>
+              <CarouselItem>
+                <div className="text-center">
+                  <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+                    Plataforma E-Learning
+                    <span className="block text-green-700">Gobernación de Nariño</span>
+                  </h1>
+                  <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
+                    Fortalece tus conocimientos y habilidades con nuestra plataforma educativa digital. 
+                    Accede a una gran variedad de cursos de calidad diseñados para el desarrollo integral de los nariñenses.
+                    Aprende a tu ritmo con tutores expertos y materiales actualizados.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link to="/register">
+                      <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg">
+                        Comenzar Ahora
+                      </Button>
+                    </Link>
+                    <Button size="lg" variant="outline" className="border-gray-700 text-gray-700 hover:bg-gray-50 px-8 py-3 text-lg">
+                      Conocer Más
+                    </Button>
+                  </div>
+                </div>
+              </CarouselItem>
+
+              <CarouselItem>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                  <div className="order-2 md:order-1 text-center md:text-left">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                      Primera Convocatoria 2025
+                      <span className="block text-green-700">Curso de Inteligencia Artificial</span>
+                    </h2>
+                    <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl">
+                      Inscríbete a nuestra primera cohorte del curso de IA. Cupos limitados para estudiantes de Nariño.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 md:justify-start justify-center">
+                      <Link to="/register">
+                        <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg">
+                          Inscríbete
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="order-1 md:order-2 flex justify-center">
+                    <img src="../public/convocatoria1.PNG" alt="Convocatoria IA" width="500" height="500" className="rounded-lg shadow object-cover" />
+                  </div>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                  <div className="order-2 md:order-1 text-center md:text-left">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                      Segunda Convocatoria 2025
+                      <span className="block text-green-700">Programación Básica con Python</span>
+                    </h2>
+                    <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl">
+                      Aprende los fundamentos de programación con Python desde cero. Inscripciones abiertas.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 md:justify-start justify-center">
+                      <Link to="/register">
+                        <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg">
+                          Inscríbete
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="order-1 md:order-2 flex justify-center">
+                    <img src="../public/convocatoria2.PNG" alt="Convocatoria Programación Python" width="500" height="500" className="rounded-lg shadow object-cover" />
+                  </div>
+                </div>
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:flex" />
+            <CarouselNext className="hidden sm:flex" />
+          </Carousel>
           </div>
         </div>
       </section>
@@ -79,7 +149,20 @@ const LandingPage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow fx-card" onMouseMove={(e)=>{
+              const r=e.currentTarget.getBoundingClientRect();
+              const x=e.clientX - r.left; const y=e.clientY - r.top;
+              const rx=-(y - r.height/2)/20; const ry=(x - r.width/2)/20;
+              e.currentTarget.style.setProperty('--rx', rx+'deg');
+              e.currentTarget.style.setProperty('--ry', ry+'deg');
+              e.currentTarget.style.setProperty('--mx', x+'px');
+              e.currentTarget.style.setProperty('--my', y+'px');
+            }} onMouseLeave={(e)=>{
+              e.currentTarget.style.setProperty('--rx','0deg');
+              e.currentTarget.style.setProperty('--ry','0deg');
+              e.currentTarget.style.setProperty('--mx','-1000px');
+              e.currentTarget.style.setProperty('--my','-1000px');
+            }}>
               <CardHeader>
                 <BookOpen className="h-12 w-12 text-green-600 mb-4" />
                 <CardTitle className="text-xl text-gray-800">Cursos Especializados</CardTitle>
@@ -92,7 +175,20 @@ const LandingPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow fx-card" onMouseMove={(e)=>{
+              const r=e.currentTarget.getBoundingClientRect();
+              const x=e.clientX - r.left; const y=e.clientY - r.top;
+              const rx=-(y - r.height/2)/20; const ry=(x - r.width/2)/20;
+              e.currentTarget.style.setProperty('--rx', rx+'deg');
+              e.currentTarget.style.setProperty('--ry', ry+'deg');
+              e.currentTarget.style.setProperty('--mx', x+'px');
+              e.currentTarget.style.setProperty('--my', y+'px');
+            }} onMouseLeave={(e)=>{
+              e.currentTarget.style.setProperty('--rx','0deg');
+              e.currentTarget.style.setProperty('--ry','0deg');
+              e.currentTarget.style.setProperty('--mx','-1000px');
+              e.currentTarget.style.setProperty('--my','-1000px');
+            }}>
               <CardHeader>
                 <Users className="h-12 w-12 text-yellow-500 mb-4" />
                 <CardTitle className="text-xl text-gray-800">Aprendizaje Colaborativo</CardTitle>
@@ -105,7 +201,20 @@ const LandingPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow fx-card" onMouseMove={(e)=>{
+              const r=e.currentTarget.getBoundingClientRect();
+              const x=e.clientX - r.left; const y=e.clientY - r.top;
+              const rx=-(y - r.height/2)/20; const ry=(x - r.width/2)/20;
+              e.currentTarget.style.setProperty('--rx', rx+'deg');
+              e.currentTarget.style.setProperty('--ry', ry+'deg');
+              e.currentTarget.style.setProperty('--mx', x+'px');
+              e.currentTarget.style.setProperty('--my', y+'px');
+            }} onMouseLeave={(e)=>{
+              e.currentTarget.style.setProperty('--rx','0deg');
+              e.currentTarget.style.setProperty('--ry','0deg');
+              e.currentTarget.style.setProperty('--mx','-1000px');
+              e.currentTarget.style.setProperty('--my','-1000px');
+            }}>
               <CardHeader>
                 <Award className="h-12 w-12 text-blue-600 mb-4" />
                 <CardTitle className="text-xl text-gray-800">Certificaciones</CardTitle>
@@ -118,7 +227,20 @@ const LandingPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow fx-card" onMouseMove={(e)=>{
+              const r=e.currentTarget.getBoundingClientRect();
+              const x=e.clientX - r.left; const y=e.clientY - r.top;
+              const rx=-(y - r.height/2)/20; const ry=(x - r.width/2)/20;
+              e.currentTarget.style.setProperty('--rx', rx+'deg');
+              e.currentTarget.style.setProperty('--ry', ry+'deg');
+              e.currentTarget.style.setProperty('--mx', x+'px');
+              e.currentTarget.style.setProperty('--my', y+'px');
+            }} onMouseLeave={(e)=>{
+              e.currentTarget.style.setProperty('--rx','0deg');
+              e.currentTarget.style.setProperty('--ry','0deg');
+              e.currentTarget.style.setProperty('--mx','-1000px');
+              e.currentTarget.style.setProperty('--my','-1000px');
+            }}>
               <CardHeader>
                 <Clock className="h-12 w-12 text-purple-600 mb-4" />
                 <CardTitle className="text-xl text-gray-800">Flexibilidad Horaria</CardTitle>
@@ -131,7 +253,20 @@ const LandingPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow fx-card" onMouseMove={(e)=>{
+              const r=e.currentTarget.getBoundingClientRect();
+              const x=e.clientX - r.left; const y=e.clientY - r.top;
+              const rx=-(y - r.height/2)/20; const ry=(x - r.width/2)/20;
+              e.currentTarget.style.setProperty('--rx', rx+'deg');
+              e.currentTarget.style.setProperty('--ry', ry+'deg');
+              e.currentTarget.style.setProperty('--mx', x+'px');
+              e.currentTarget.style.setProperty('--my', y+'px');
+            }} onMouseLeave={(e)=>{
+              e.currentTarget.style.setProperty('--rx','0deg');
+              e.currentTarget.style.setProperty('--ry','0deg');
+              e.currentTarget.style.setProperty('--mx','-1000px');
+              e.currentTarget.style.setProperty('--my','-1000px');
+            }}>
               <CardHeader>
                 <CheckCircle className="h-12 w-12 text-green-600 mb-4" />
                 <CardTitle className="text-xl text-gray-800">Seguimiento de Progreso</CardTitle>
@@ -144,7 +279,20 @@ const LandingPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow">
+            <Card className="hover:shadow-lg transition-shadow fx-card" onMouseMove={(e)=>{
+              const r=e.currentTarget.getBoundingClientRect();
+              const x=e.clientX - r.left; const y=e.clientY - r.top;
+              const rx=-(y - r.height/2)/20; const ry=(x - r.width/2)/20;
+              e.currentTarget.style.setProperty('--rx', rx+'deg');
+              e.currentTarget.style.setProperty('--ry', ry+'deg');
+              e.currentTarget.style.setProperty('--mx', x+'px');
+              e.currentTarget.style.setProperty('--my', y+'px');
+            }} onMouseLeave={(e)=>{
+              e.currentTarget.style.setProperty('--rx','0deg');
+              e.currentTarget.style.setProperty('--ry','0deg');
+              e.currentTarget.style.setProperty('--mx','-1000px');
+              e.currentTarget.style.setProperty('--my','-1000px');
+            }}>
               <CardHeader>
                 <Star className="h-12 w-12 text-yellow-500 mb-4" />
                 <CardTitle className="text-xl text-gray-800">Contenido de Calidad</CardTitle>

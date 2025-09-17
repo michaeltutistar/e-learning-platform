@@ -204,3 +204,94 @@ select:focus {
   height: 28px; /* Adjust as needed */
   margin-right: 15px; /* Space between logo and text */
 }
+
+/* Sliding diagonals background effect (scoped to hero section) */
+#inicio.hero-diagonals {
+	position: relative;
+	overflow: hidden;
+}
+#inicio.hero-diagonals .diag {
+	animation: slide 6s ease-in-out infinite alternate;
+	background-image: linear-gradient(-60deg, #22c55e 50%, #b5d406 50%);
+	position: absolute;
+	top: -10%;
+	bottom: -10%;
+	left: -50%;
+	right: -50%;
+	opacity: .35;
+	z-index: 0;
+	pointer-events: none;
+}
+#inicio.hero-diagonals .diag2 {
+	animation-direction: alternate-reverse;
+	animation-duration: 8s;
+}
+#inicio.hero-diagonals .diag3 {
+	animation-duration: 10s;
+}
+@keyframes slide {
+	0% { transform: translateX(-25%); }
+	100% { transform: translateX(25%); }
+}
+
+/* Interactive card effect for feature section */
+.fx-card {
+	position: relative;
+	border-radius: 0.75rem;
+	transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+	transition: transform 120ms ease, box-shadow 200ms ease;
+	will-change: transform;
+}
+.fx-card:hover {
+	box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+.fx-card::after {
+	content: '';
+	position: absolute;
+	inset: -1px;
+	border-radius: inherit;
+	pointer-events: none;
+	background: radial-gradient(400px 200px at var(--mx, -1000px) var(--my, -1000px), rgba(255,255,255,0.35), transparent 60%);
+	opacity: 0;
+	transition: opacity 200ms ease;
+}
+.fx-card:hover::after { opacity: .85; }
+
+/* 3D nav button effect */
+.nav-3d {
+	position: relative;
+	display: inline-block;
+	width: auto;
+	height: 40px;
+	transform-style: preserve-3d;
+	transform: perspective(800px) rotateX(0deg);
+	transition: transform 2000ms cubic-bezier(.2,.6,.2,1);
+}
+.nav-3d:hover {
+	transform: perspective(800px) rotateX(360deg);
+}
+.nav-3d span {
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	display: flex; align-items: center; justify-content: center;
+	padding: 0 14px;
+	border: 1px solid rgba(0,0,0,0.3);
+	background: rgb(255, 255, 255);
+	color: #111;
+	font-weight: 500;
+	border-radius: 8px;
+	box-sizing: border-box;
+}
+.nav-3d:hover span { background: rgba(34,197,94,0.9); color: #fff; }
+.nav-3d span:nth-child(1){ transform: rotateX(360deg) translateZ(20px); }
+.nav-3d span:nth-child(2){ transform: rotateX(270deg) translateZ(20px); }
+.nav-3d span:nth-child(3){ transform: rotateX(180deg) translateZ(20px); }
+.nav-3d span:nth-child(4){ transform: rotateX(90deg) translateZ(20px); }
+
+/* sizing shim for nav-3d to avoid overlap */
+.nav-3d::before {
+	content: attr(data-label);
+	display: block;
+	padding: 0 14px;
+	visibility: hidden;
+}

@@ -26,7 +26,7 @@ def register():
         data = request.json
         
         # Validar campos obligatorios
-        required_fields = ['nombre', 'apellido', 'email', 'tipo_documento', 'numero_documento', 'password', 'confirm_password']
+        required_fields = ['nombre', 'apellido', 'email', 'tipo_documento', 'numero_documento', 'password', 'confirm_password', 'convocatoria']
         for field in required_fields:
             if not data.get(field):
                 return jsonify({'error': f'El campo {field} es obligatorio'}), 400
@@ -43,10 +43,19 @@ def register():
         if data['password'] != data['confirm_password']:
             return jsonify({'error': 'Las contraseñas no coinciden'}), 400
         
+        # Validar convocatoria (solo '1' o '2')
+        if data.get('convocatoria') not in ['1', '2']:
+            return jsonify({'error': 'La convocatoria seleccionada no es válida'}), 400
+        
         # Verificar si el email ya existe
         existing_user = User.query.filter_by(email=data['email']).first()
         if existing_user:
             return jsonify({'error': 'El email ya está registrado'}), 400
+        
+        # Verificar si el número de documento ya existe
+        existing_doc = User.query.filter_by(numero_documento=data['numero_documento']).first()
+        if existing_doc:
+            return jsonify({'error': 'El número de documento ya está registrado'}), 400
         
         # Procesar archivos PDF si están presentes
         documento_pdf = None
@@ -78,7 +87,8 @@ def register():
             documento_pdf=documento_pdf,
             documento_pdf_nombre=documento_pdf_nombre,
             requisitos_pdf=requisitos_pdf,
-            requisitos_pdf_nombre=requisitos_pdf_nombre
+            requisitos_pdf_nombre=requisitos_pdf_nombre,
+            convocatoria=data.get('convocatoria')
         )
         user.set_password(data['password'])
         

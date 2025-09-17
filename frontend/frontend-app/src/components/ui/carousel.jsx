@@ -21,6 +21,8 @@ function useCarousel() {
 function Carousel({
   orientation = "horizontal",
   opts,
+  autoPlay = false,
+  autoPlayInterval = 5000,
   setApi,
   plugins,
   className,
@@ -73,6 +75,20 @@ function Carousel({
       api?.off("select", onSelect)
     };
   }, [api, onSelect])
+
+  // Auto play effect
+  React.useEffect(() => {
+    if (!api || !autoPlay) return
+    const intervalId = setInterval(() => {
+      if (api.canScrollNext()) {
+        api.scrollNext()
+      } else {
+        api.scrollTo(0)
+      }
+    }, autoPlayInterval)
+
+    return () => clearInterval(intervalId)
+  }, [api, autoPlay, autoPlayInterval])
 
   return (
     <CarouselContext.Provider
@@ -192,4 +208,4 @@ function CarouselNext({
   );
 }
 
-export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext };
+export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext }
