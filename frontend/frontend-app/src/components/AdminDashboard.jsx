@@ -12,6 +12,10 @@ import PhaseManagement from './admin/PhaseManagement'
 import CourseManagement from './admin/CourseManagement'
 import AssetsManagement from './admin/AssetsManagement'
 import EvidenceManagementFixed from './admin/EvidenceManagementFixed'
+import CriteriosEvaluacion from './admin/CriteriosEvaluacion'
+import EvaluacionPanel from './admin/EvaluacionPanel'
+import RankingsPanel from './admin/RankingsPanel'
+import SorteoPanel from './admin/SorteoPanel'
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -230,6 +234,46 @@ const AdminDashboard = () => {
             >
               📋 Evidencias de Funcionamiento
             </button>
+            <button
+              onClick={() => setActiveTab('criterios')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'criterios'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              ⚖️ Criterios de Evaluación
+            </button>
+            <button
+              onClick={() => setActiveTab('evaluacion')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'evaluacion'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              📊 Panel de Evaluación
+            </button>
+            <button
+              onClick={() => setActiveTab('rankings')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'rankings'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              🏆 Rankings y Exportación
+            </button>
+            <button
+              onClick={() => setActiveTab('sorteos')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'sorteos'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              🎲 Sistema de Desempate
+            </button>
           </div>
         </div>
       </nav>
@@ -248,6 +292,10 @@ const AdminDashboard = () => {
         {activeTab === 'cursos' && <CourseManagement />}
         {activeTab === 'activos' && <AssetsManagement />}
         {activeTab === 'evidencias' && <EvidenceManagementFixed />}
+        {activeTab === 'criterios' && <CriteriosEvaluacion />}
+        {activeTab === 'evaluacion' && <EvaluacionPanel />}
+        {activeTab === 'rankings' && <RankingsPanel />}
+        {activeTab === 'sorteos' && <SorteoPanel />}
       </main>
     </div>
   )

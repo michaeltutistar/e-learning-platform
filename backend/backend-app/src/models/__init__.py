@@ -19,3 +19,6 @@ from .usuario_curso import UsuarioCurso
 from .activo import Activo
 from .usuario_activo import UsuarioActivo
 from .evidencia_funcionamiento import EvidenciaFuncionamiento
+from .criterio_evaluacion import CriterioEvaluacion
+from .evaluacion import Evaluacion
+from .sorteo import Sorteo

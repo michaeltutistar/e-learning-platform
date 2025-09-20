@@ -16,6 +16,8 @@ from src.routes.notificaciones import notificaciones_bp
 from src.routes.cursos import cursos_bp
 from src.routes.activos import activos_bp
 from src.routes.evidencias import evidencias_bp
+from src.routes.criterios import criterios_bp
+from src.routes.evaluaciones import evaluaciones_bp
 from src.config import config
 
 # Determinar el entorno
@@ -48,6 +50,8 @@ app.register_blueprint(notificaciones_bp, url_prefix='/api')
 app.register_blueprint(cursos_bp, url_prefix='/api')
 app.register_blueprint(activos_bp, url_prefix='/api')
 app.register_blueprint(evidencias_bp, url_prefix='/api')
+app.register_blueprint(criterios_bp, url_prefix='/api')
+app.register_blueprint(evaluaciones_bp, url_prefix='/api')
 
 # Configurar base de datos directamente para producción
 if os.getenv('FLASK_ENV', '').strip() == 'production':
