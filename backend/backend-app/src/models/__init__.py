@@ -11,3 +11,11 @@ from .log_actividad import LogActividad
 from .modulo import Modulo
 from .leccion import Leccion
 from .recurso import Recurso 
+from .cupos_config import CuposConfig
+from .municipio_cupo import MunicipioCupo
+from .notificacion import Notificacion
+from .curso import Curso
+from .usuario_curso import UsuarioCurso
+from .activo import Activo
+from .usuario_activo import UsuarioActivo
+from .evidencia_funcionamiento import EvidenciaFuncionamiento

@@ -21,6 +21,11 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import StudentHeader from './StudentHeader';
+import PhaseProgress from '../PhaseProgress';
+import Notifications from '../Notifications';
+import MyCourses from '../MyCourses';
+import MyAssets from '../MyAssets'
+import EvidenceUploadFixed from '../EvidenceUploadFixed'
 
 const StudentDashboard = () => {
   const [estadisticas, setEstadisticas] = useState({
@@ -171,9 +176,14 @@ const StudentDashboard = () => {
 
         {/* Tabs principales */}
         <Tabs defaultValue="progreso" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-8">
             <TabsTrigger value="progreso">Mi Progreso</TabsTrigger>
+            <TabsTrigger value="fases">Fases del Proyecto</TabsTrigger>
+            <TabsTrigger value="notificaciones">Notificaciones</TabsTrigger>
             <TabsTrigger value="cursos">Mis Cursos</TabsTrigger>
+            <TabsTrigger value="activos">Mis Activos</TabsTrigger>
+            <TabsTrigger value="evidencias">Evidencias</TabsTrigger>
+            <TabsTrigger value="cursos_old">Mis Cursos (Old)</TabsTrigger>
             <TabsTrigger value="fechas">Próximas Fechas</TabsTrigger>
             <TabsTrigger value="actividad">Actividad Reciente</TabsTrigger>
           </TabsList>
@@ -236,7 +246,27 @@ const StudentDashboard = () => {
             </div>
           </TabsContent>
 
+          <TabsContent value="fases" className="space-y-6">
+            <PhaseProgress />
+          </TabsContent>
+
+          <TabsContent value="notificaciones" className="space-y-6">
+            <Notifications />
+          </TabsContent>
+
           <TabsContent value="cursos" className="space-y-6">
+            <MyCourses />
+          </TabsContent>
+
+          <TabsContent value="activos" className="space-y-6">
+            <MyAssets />
+          </TabsContent>
+
+          <TabsContent value="evidencias" className="space-y-6">
+            <EvidenceUploadFixed />
+          </TabsContent>
+
+          <TabsContent value="cursos_old" className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold">Mis Cursos</h2>
               <Button onClick={() => navigate('/student/cursos')}>

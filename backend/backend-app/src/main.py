@@ -12,6 +12,10 @@ from src.routes.content import content_bp
 from src.routes.resources import resources_bp
 from src.routes.instructor import instructor_bp
 from src.routes.student import student_bp
+from src.routes.notificaciones import notificaciones_bp
+from src.routes.cursos import cursos_bp
+from src.routes.activos import activos_bp
+from src.routes.evidencias import evidencias_bp
 from src.config import config
 
 # Determinar el entorno
@@ -40,10 +44,14 @@ app.register_blueprint(content_bp, url_prefix='/api/content')
 app.register_blueprint(resources_bp, url_prefix='/api/resources')
 app.register_blueprint(instructor_bp, url_prefix='/api/instructor')
 app.register_blueprint(student_bp, url_prefix='/api/student')
+app.register_blueprint(notificaciones_bp, url_prefix='/api')
+app.register_blueprint(cursos_bp, url_prefix='/api')
+app.register_blueprint(activos_bp, url_prefix='/api')
+app.register_blueprint(evidencias_bp, url_prefix='/api')
 
 # Configurar base de datos directamente para producción
 if os.getenv('FLASK_ENV', '').strip() == 'production':
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://elearning_user:password_seguro@localhost:5432/elearning_narino'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg://elearning_user:password_seguro@localhost:5433/elearning_narino'
 
 # Inicializar base de datos
 db.init_app(app)

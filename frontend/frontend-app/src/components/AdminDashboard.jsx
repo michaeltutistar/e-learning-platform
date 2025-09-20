@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MetricsPanel from './admin/MetricsPanel'
+import CuposConfig from './admin/CuposConfig'
 import UserManagement from './admin/UserManagement'
 import BulkUserImport from './admin/BulkUserImport'
 import ActivityLogs from './admin/ActivityLogs'
 import ContentManagement from './admin/ContentManagement'
 import ResourceManagement from './admin/ResourceManagement'
+import CertificadosControl from './admin/CertificadosControl'
+import PhaseManagement from './admin/PhaseManagement'
+import CourseManagement from './admin/CourseManagement'
+import AssetsManagement from './admin/AssetsManagement'
+import EvidenceManagementFixed from './admin/EvidenceManagementFixed'
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -164,6 +170,66 @@ const AdminDashboard = () => {
             >
               📋 Logs de Actividad
             </button>
+            <button
+              onClick={() => setActiveTab('cupos')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'cupos'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              🧮 Configurar Cupos
+            </button>
+            <button
+              onClick={() => setActiveTab('certificados')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'certificados'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              🛡️ Certificados Control
+            </button>
+            <button
+              onClick={() => setActiveTab('fases')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'fases'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              🚀 Gestión de Fases
+            </button>
+            <button
+              onClick={() => setActiveTab('cursos')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'cursos'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              📚 Gestión de Cursos
+            </button>
+            <button
+              onClick={() => setActiveTab('activos')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'activos'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              📦 Entrega de Activos
+            </button>
+            <button
+              onClick={() => setActiveTab('evidencias')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'evidencias'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              📋 Evidencias de Funcionamiento
+            </button>
           </div>
         </div>
       </nav>
@@ -176,6 +242,12 @@ const AdminDashboard = () => {
         {activeTab === 'content' && <ContentManagement />}
         {activeTab === 'resources' && <ResourceManagement />}
         {activeTab === 'logs' && <ActivityLogs />}
+        {activeTab === 'cupos' && <CuposConfig />}
+        {activeTab === 'certificados' && <CertificadosControl />}
+        {activeTab === 'fases' && <PhaseManagement />}
+        {activeTab === 'cursos' && <CourseManagement />}
+        {activeTab === 'activos' && <AssetsManagement />}
+        {activeTab === 'evidencias' && <EvidenceManagementFixed />}
       </main>
     </div>
   )

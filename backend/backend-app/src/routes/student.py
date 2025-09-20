@@ -95,20 +95,24 @@ def get_student_dashboard():
             }
         ]
         
-        # Obtener actividad reciente
-        actividad_reciente = LogActividad.query.filter_by(usuario_id=user.id)\
-            .order_by(LogActividad.fecha.desc())\
-            .limit(5).all()
-        
-        actividad_formateada = [
-            {
-                'id': act.id,
-                'tipo': act.tipo,
-                'descripcion': act.descripcion,
-                'fecha': act.fecha.isoformat()
-            }
-            for act in actividad_reciente
-        ]
+        # Obtener actividad reciente (simplificado para evitar errores)
+        try:
+            actividad_reciente = LogActividad.query.filter_by(usuario_id=user.id)\
+                .order_by(LogActividad.fecha.desc())\
+                .limit(5).all()
+            
+            actividad_formateada = [
+                {
+                    'id': act.id,
+                    'tipo': act.accion,  # Cambiado de 'tipo' a 'accion'
+                    'descripcion': act.detalles,  # Cambiado de 'descripcion' a 'detalles'
+                    'fecha': act.fecha.isoformat() if act.fecha else None
+                }
+                for act in actividad_reciente
+            ]
+        except Exception as e:
+            logger.error(f"Error getting activity log: {str(e)}")
+            actividad_formateada = []
         
         return jsonify({
             'success': True,
