@@ -16,7 +16,7 @@ docker-compose ps
 
 echo.
 echo 🚀 Iniciando Backend con PostgreSQL...
-start "Backend PostgreSQL" cmd /k "cd backend\backend-app && set FLASK_ENV=production && set DATABASE_URL=postgresql://elearning_user:password_seguro@localhost:5432/elearning_narino && call venv\Scripts\activate.bat && python src\main.py"
+start "Backend PostgreSQL" cmd /k "cd backend\backend-app && set FLASK_ENV=production && set DATABASE_URL=postgresql://elearning_user:password_seguro@localhost:5433/elearning_narino && call venv\Scripts\activate.bat && python src\main.py"
 
 echo.
 echo ⏳ Esperando que el backend esté listo...
@@ -39,7 +39,7 @@ echo    Backend:  http://localhost:5000
 echo    pgAdmin:  http://localhost:5050
 echo.
 echo 🗄️ Base de datos PostgreSQL:
-echo    Host: localhost:5432
+echo    Host: localhost:5433
 echo    Database: elearning_narino
 echo    User: elearning_user
 echo.
