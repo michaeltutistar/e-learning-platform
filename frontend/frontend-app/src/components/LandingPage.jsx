@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BookOpen, Users, Award, Clock, CheckCircle, Star, Search, MapPin, Target, TrendingUp, ChevronDown } from 'lucide-react'
@@ -7,6 +7,93 @@ import logoGobernacion from '../assets/logo-gobernacion.png'
 import logoGov from '../assets/logo-gov.png'
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel'
 import { Input } from '@/components/ui/input'
+
+// Componente de contador de cuenta regresiva
+const CountdownTimer = () => {
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  })
+
+  useEffect(() => {
+    // Fecha objetivo: 30 de septiembre a las 8:00 AM
+    const targetDate = new Date('2025-09-30T08:00:00')
+    
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime()
+      const difference = targetDate.getTime() - now
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+
+        setTimeLeft({ days, hours, minutes, seconds })
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+      }
+    }
+
+    // Calcular inmediatamente
+    calculateTimeLeft()
+    
+    // Actualizar cada segundo
+    const timer = setInterval(calculateTimeLeft, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl border-2 border-green-200 p-6 max-w-md mx-auto">
+      <div className="text-center mb-4">
+        <h3 className="text-lg font-bold text-gray-800 mb-2">
+          ⏰ Tiempo restante para abrir convocatoria
+        </h3>
+        <p className="text-sm text-gray-600">
+          Hasta el 30 de septiembre a las 8:00 AM
+        </p>
+      </div>
+      
+      <div className="grid grid-cols-4 gap-3">
+        <div className="text-center">
+          <div className="bg-green-600 text-white rounded-lg p-3 shadow-lg">
+            <div className="text-2xl font-bold">{timeLeft.days}</div>
+            <div className="text-xs">Días</div>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="bg-green-600 text-white rounded-lg p-3 shadow-lg">
+            <div className="text-2xl font-bold">{timeLeft.hours}</div>
+            <div className="text-xs">Horas</div>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="bg-green-600 text-white rounded-lg p-3 shadow-lg">
+            <div className="text-2xl font-bold">{timeLeft.minutes}</div>
+            <div className="text-xs">Min</div>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="bg-green-600 text-white rounded-lg p-3 shadow-lg">
+            <div className="text-2xl font-bold">{timeLeft.seconds}</div>
+            <div className="text-xs">Seg</div>
+          </div>
+        </div>
+      </div>
+      
+      {/* <div className="mt-4 text-center">
+        <Link to="/register">
+          <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 text-sm font-medium">
+            ¡Postúlate Ahora!
+          </Button>
+        </Link>
+      </div> */}
+    </div>
+  )
+}
 
 const HorizontalTimeline = () => {
   const [activePhase, setActivePhase] = useState(0)
@@ -26,7 +113,7 @@ const HorizontalTimeline = () => {
       icon: <BookOpen className="h-8 w-8" />,
       color: "yellow",
       description: "Formación virtual y presencial en modelo de negocio, gestión financiera, marketing, innovación, legalidad y formalización.",
-      details: ["Campus itinerante", "Plataforma E-learning", "80 horas de formación", "Acompañamiento técnico"]
+      details: ["Campus itinerante", "Plataforma Emprendipaz", "80 horas de formación", "Acompañamiento técnico"]
     },
     {
       id: 2,
@@ -277,7 +364,7 @@ const NodesTable = () => {
       municipios: ["Arboleda", "Buesaco", "La Unión", "San Lorenzo", "San Pedro de Cartago"]
     },
     {
-      nodo: "Occidental",
+      nodo: "Occidente",
       central: "Sandoná",
       municipios: ["Ancuya", "Consacá", "Linares", "Sandoná"]
     },
@@ -287,14 +374,14 @@ const NodesTable = () => {
       municipios: ["Albán", "Belén", "Colón", "El Tablón de Gómez", "La Cruz", "San Bernardo", "San Pablo"]
     },
     {
-      nodo: "Costa",
+      nodo: "Costa Pacífica",
       central: "Tumaco",
       municipios: ["Francisco Pizarro", "Tumaco", "El Charco", "La Tola", "Mosquera", "Olaya Herrera", "Santa Bárbara"]
     },
     {
       nodo: "Sabana",
       central: "Túquerres",
-      municipios: ["Guaitarilla", "Imués", "Ospina", "Sapuyes", "Túquerres", "Ricaurte"]
+      municipios: ["Guaitarilla", "Imués", "Ospina", "Sapuyes", "Túquerres", "Ricaurte", "Mallama"]
     },
     {
       nodo: "Telembí",
@@ -456,10 +543,7 @@ const NodesTable = () => {
                 <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
                 <span>Mostrando {filteredNodes.length} de 11 nodos</span>
               </div>
-              <div className="flex items-center">
-                <MapPin className="h-4 w-4 mr-1" />
-                <span>{filteredNodes.reduce((total, node) => total + node.municipios.length, 0)} municipios</span>
-              </div>
+              
             </div>
             {searchTerm && (
               <div className="text-blue-600 font-medium">
@@ -474,6 +558,13 @@ const NodesTable = () => {
 }
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+  
+  // Función para navegar a términos de referencia en la misma pestaña
+  const handleOpenTDR = () => {
+    navigate('/terminos-referencia');
+  };
+
   useEffect(() => {
     // Agregar estilos CSS para la animación de borde luminoso
     const style = document.createElement('style');
@@ -592,38 +683,56 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white shadow-sm border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-4">
-              <img src={logoGobernacion} alt="Gobernación de Nariño" className="h-12" />
-              <img src={logoGov} alt="GOV.CO" className="h-8" />
+          <div className="flex flex-col lg:flex-row justify-between items-center py-4 space-y-4 lg:space-y-0">
+            <div className="flex items-center space-x-2 sm:space-x-4 flex-wrap justify-center lg:justify-start">
+              <img src="/emprendipaz.png" alt="EmprendiPaz" className="h-10 sm:h-12" />
+              <img src={logoGobernacion} alt="Gobernación de Nariño" className="h-10 sm:h-12" />
+              <img src="/fundacion.png" alt="Fundación" className="h-10 sm:h-12" />
+              <img src="/consorcio.png" alt="Consorcio" className="h-10 sm:h-12" />
             </div>
-            <nav className="hidden md:flex space-x-6 items-center">
-              <a href="#inicio" className="nav-3d" data-label="Inicio">
+            <nav className="hidden md:flex space-x-4 lg:space-x-6 items-center">
+              <a href="#inicio" className="nav-3d text-sm lg:text-base" data-label="Inicio">
                 <span>Inicio</span><span>Inicio</span><span>Inicio</span><span>Inicio</span>
               </a>
-              <a href="#caracteristicas" className="nav-3d" data-label="Fases">
+              <a href="#caracteristicas" className="nav-3d text-sm lg:text-base" data-label="Fases">
                 <span>Fases</span><span>Fases</span><span>Fases</span><span>Fases</span>
               </a>
-              <a href="#beneficios" className="nav-3d" data-label="Cobertura">
+              <a href="#beneficios" className="nav-3d text-sm lg:text-base" data-label="Cobertura">
                 <span>Cobertura</span><span>Cobertura</span><span>Cobertura</span><span>Cobertura</span>
               </a>
-              <a href="#contacto" className="nav-3d" data-label="Contacto">
+              <a href="#contacto" className="nav-3d text-sm lg:text-base" data-label="Contacto">
                 <span>Contacto</span><span>Contacto</span><span>Contacto</span><span>Contacto</span>
               </a>
             </nav>
-            <div className="flex space-x-4">
-              <Link to="/login">
-                <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 lg:space-x-4 w-full sm:w-auto">
+              <Link to="/login" className="w-full sm:w-auto">
+                <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50 w-full sm:w-auto text-sm">
                   Iniciar Sesión
                 </Button>
               </Link>
-              <Link to="/register">
-                <Button className="bg-green-600 hover:bg-green-700 text-white">
-                  Registrarse
-                </Button>
-              </Link>
+              {(() => {
+                // Fecha objetivo: 30 de septiembre a las 8:00 AM
+                const targetDate = new Date('2025-09-30T08:00:00')
+                const now = new Date()
+                const disabled = now < targetDate
+                return disabled ? (
+                  <Button 
+                    className="bg-gray-400 text-white cursor-not-allowed w-full sm:w-auto text-sm"
+                    disabled={true}
+                    title="Disponible a partir del 30 de septiembre a las 8:00 AM"
+                  >
+                    Registrarse
+                  </Button>
+                ) : (
+                  <Link to="/register" className="w-full sm:w-auto">
+                    <Button className="bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto text-sm">
+                      Registrarse
+                    </Button>
+                  </Link>
+                )
+              })()}
             </div>
           </div>
         </div>
@@ -643,20 +752,21 @@ const LandingPage = () => {
                   <div className="mb-4">
                     <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
                       Proyecto de Emprendimiento para Jóvenes en Nariño
-                      <span className="block text-green-700">Gobernación de Nariño</span>
+                      <span className="block text-white">Gobernación de Nariño</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-4xl mx-auto">
-                      Un programa de fortalecimiento y apoyo para 728 emprendimientos en 64 municipios de Nariño, 
+                      Una estrategia de fortalecimiento y apoyo para 728 emprendimientos en 64 municipios de Nariño, 
                       con acompañamiento en formación y entrega de activos productivos.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                      <Link to="/register">
-                        <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg">
-                          Postúlate aquí
-                        </Button>
-                      </Link>
-                      <Button size="lg" variant="outline" className="border-gray-700 text-gray-700 hover:bg-gray-50 px-8 py-3 text-lg">
-                        Conocer Más
+                    <div className="flex flex-col items-center gap-6">
+                      <CountdownTimer />
+                      <Button 
+                        size="lg" 
+                        variant="outline" 
+                        className="border-gray-700 text-gray-700 hover:bg-gray-50 px-8 py-3 text-lg"
+                        onClick={handleOpenTDR}
+                      >
+                        Conocer Términos de Referencia
                       </Button>
                     </div>
                   </div>
@@ -671,18 +781,22 @@ const LandingPage = () => {
                   <div className="mb-8">
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
                       EmprendiPaz
-                      <span className="block text-green-700">Para jóvenes que transforman territorios</span>
+                      <span className="block text-white">Para jóvenes que transforman territorios</span>
                     </h2>
                     <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-4xl">
                       Únete a la iniciativa que impulsa el emprendimiento juvenil en Nariño. 
                       Formación, acompañamiento y activos productivos para tu proyecto.
                     </p>
-                    <div className="flex justify-center">
-                      <Link to="/register">
-                        <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg">
-                          Postúlate aquí
-                        </Button>
-                      </Link>
+                    <div className="flex flex-col items-center gap-6">
+                      <CountdownTimer />
+                      <Button 
+                        size="lg" 
+                        variant="outline" 
+                        className="border-gray-700 text-gray-700 hover:bg-gray-50 px-8 py-3 text-lg"
+                        onClick={handleOpenTDR}
+                      >
+                        Conocer Términos de Referencia
+                      </Button>
                     </div>
                   </div>
                   <div className="w-full max-w-6xl">
@@ -695,18 +809,18 @@ const LandingPage = () => {
                   <div className="mb-8">
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
                       EmprendiPaz
-                      <span className="block text-green-700">Para jóvenes que transforman territorios</span>
+                      <span className="block text-white">Para jóvenes que transforman territorios</span>
                     </h2>
-                    <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-4xl">
-                      Únete a la iniciativa que impulsa el emprendimiento juvenil en Nariño. 
-                      Formación, acompañamiento y activos productivos para tu proyecto.
-                    </p>
-                    <div className="flex justify-center">
-                      <Link to="/register">
-                        <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg">
-                          Postúlate aquí
-                        </Button>
-                      </Link>
+                    <div className="flex flex-col items-center gap-6">
+                      <CountdownTimer />
+                      <Button 
+                        size="lg" 
+                        variant="outline" 
+                        className="border-gray-700 text-gray-700 hover:bg-gray-50 px-8 py-3 text-lg"
+                        onClick={handleOpenTDR}
+                      >
+                        Conocer Términos de Referencia
+                      </Button>
                     </div>
                   </div>
                   <div className="w-full max-w-6xl">
@@ -766,7 +880,7 @@ const LandingPage = () => {
               Cobertura Territorial
             </h2>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              El proyecto tiene alcance departamental, cubriendo las 11 subregiones 
+              El proyecto tiene alcance departamental, cubriendo las 13 subregiones 
               de Nariño con participación en 64 municipios. Incluye acompañamiento integral 
               con sesiones virtuales y presenciales en nodos estratégicos.
             </p>
@@ -781,7 +895,7 @@ const LandingPage = () => {
                   </div>
                 </div>
                 <div className="group-hover:text-white transition-colors duration-300">
-                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-yellow-100">11 Subregiones</h3>
+                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-yellow-100">13 Subregiones</h3>
                   <p className="text-white/80">
                     Cobertura integral en todas las subregiones del departamento de Nariño, 
                     garantizando equidad territorial en el acceso al programa.
@@ -826,10 +940,9 @@ const LandingPage = () => {
                   </div>
                 </div>
                 <div className="group-hover:text-white transition-colors duration-300">
-                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-yellow-100">Nodos Estratégicos</h3>
+                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-yellow-100">11 Nodos Estratégicos</h3>
                   <p className="text-white/80">
-                    Coordinación desde 5 nodos principales: <strong>Pasto, Ipiales, Tumaco, 
-                    La Unión y Samaniego</strong>, con seguimiento e impacto continuo 
+                    Cobertura integral en todo el territorio, con seguimiento e impacto continuo 
                     para medir el desarrollo territorial.
                   </p>
                 </div>
@@ -843,12 +956,12 @@ const LandingPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 <div className="bg-white rounded-lg p-3 shadow-sm border text-center min-h-[100px] flex flex-col justify-center hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer group">
                   <div className="text-3xl font-bold text-green-600 mb-1 counter group-hover:scale-110 transition-transform duration-300" data-target="728">0</div>
-                  <p className="text-gray-600 text-[10px] leading-tight px-2 group-hover:text-green-700 transition-colors duration-300">Empresas caracterizadas</p>
+                  <p className="text-gray-600 text-[10px] leading-tight px-2 group-hover:text-green-700 transition-colors duration-300">Emprendedores formados</p>
                   <small className="text-gray-500 text-[9px]">(Meta principal)</small>
                 </div>
                 <div className="bg-white rounded-lg p-3 shadow-sm border text-center min-h-[100px] flex flex-col justify-center hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer group delay-75">
                   <div className="text-3xl font-bold text-yellow-600 mb-1 counter group-hover:scale-110 transition-transform duration-300" data-target="436">0</div>
-                  <p className="text-gray-600 text-[10px] leading-tight px-2 group-hover:text-yellow-700 transition-colors duration-300">Con activos productivos</p>
+                  <p className="text-gray-600 text-[10px] leading-tight px-2 group-hover:text-yellow-700 transition-colors duration-300">Emprendedores con activos productivos</p>
                   <small className="text-gray-500 text-[9px]">(Fortalecidos)</small>
                 </div>
                 <div className="bg-white rounded-lg p-3 shadow-sm border text-center min-h-[100px] flex flex-col justify-center hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer group delay-150">
@@ -857,17 +970,37 @@ const LandingPage = () => {
                   <small className="text-gray-500 text-[9px]">(Cobertura total)</small>
                 </div>
                 <div className="bg-white rounded-lg p-3 shadow-sm border text-center min-h-[100px] flex flex-col justify-center hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer group delay-200">
-                  <div className="text-3xl font-bold text-purple-600 mb-1 group-hover:scale-110 transition-transform duration-300">11</div>
+                  <div className="text-3xl font-bold text-purple-600 mb-1 group-hover:scale-110 transition-transform duration-300">13</div>
                   <p className="text-gray-600 text-[10px] leading-tight px-2 group-hover:text-purple-700 transition-colors duration-300">Subregiones cubiertas</p>
                   <small className="text-gray-500 text-[9px]">(Alcance departamental)</small>
                 </div>
               </div>
               <div className="text-center">
-                <Link to="/register">
-                  <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
-                    Postúlate aquí
-                  </Button>
-                </Link>
+                {(() => {
+                  // Fecha objetivo: 30 de septiembre a las 8:00 AM
+                  const targetDate = new Date('2025-09-30T08:00:00')
+                  const now = new Date()
+                  const disabled = now < targetDate
+                  return disabled ? (
+                    <Button
+                      size="lg"
+                      className="bg-gray-400 text-white cursor-not-allowed px-8 py-3"
+                      disabled={true}
+                      title="Disponible a partir del 30 de septiembre a las 8:00 AM"
+                    >
+                      Postúlate aquí
+                    </Button>
+                  ) : (
+                    <Link to="/register">
+                      <Button
+                        size="lg"
+                        className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
+                      >
+                        Postúlate aquí
+                      </Button>
+                    </Link>
+                  )
+                })()}
               </div>
             </div>
           </div>
@@ -897,11 +1030,11 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center space-x-4 mb-4">
-                <img src={logoGobernacion} alt="Gobernación de Nariño" className="h-10" />
+                <img src="/emprendipaz.png" alt="EmprendiPaz" className="h-12" />
               </div>
               <p className="text-gray-300 mb-4">
-                Este proyecto se desarrolla en el marco de la Gobernación de Nariño, 
-                con principios de transparencia, equidad y acompañamiento a la juventud emprendedora.
+                Este proyecto lo desarrolla la Gobernacion de nariño, con principios
+                de transparencia, equidad y acompañamiento a los jóvenes emprendedores del departamento.
               </p>
             </div>
             
@@ -912,15 +1045,37 @@ const LandingPage = () => {
                 <li><a href="#caracteristicas" className="text-gray-300 hover:text-white transition-colors">Fases</a></li>
                 <li><a href="#beneficios" className="text-gray-300 hover:text-white transition-colors">Cobertura</a></li>
                 <li><Link to="/login" className="text-gray-300 hover:text-white transition-colors">Iniciar Sesión</Link></li>
-                <li><Link to="/register" className="text-gray-300 hover:text-white transition-colors">Registrarse</Link></li>
+                {(() => {
+                  // Fecha objetivo: 30 de septiembre a las 8:00 AM
+                  const targetDate = new Date('2025-09-30T08:00:00')
+                  const now = new Date()
+                  const disabled = now < targetDate
+                  return (
+                    <li>
+                      <div
+                        className={`transition-colors ${
+                          disabled 
+                            ? "text-gray-500 cursor-not-allowed" 
+                            : "text-gray-300 hover:text-white"
+                        }`}
+                        title={disabled ? "Disponible a partir del 30 de septiembre a las 8:00 AM" : ""}
+                      >
+                        {disabled ? "Registrarse" : (
+                          <Link to="/register" className="text-gray-300 hover:text-white transition-colors">
+                            Registrarse
+                          </Link>
+                        )}
+                      </div>
+                    </li>
+                  )
+                })()}
               </ul>
             </div>
             
             <div>
               <h3 className="text-lg font-semibold mb-4">Contacto</h3>
               <div className="space-y-2 text-gray-300">
-                <p>📧 educacion@narino.gov.co</p>
-                <p>📞 (2) 123-4567</p>
+                <p>📧 consorcioprimeronarino@gmail.com </p>
                 <p>📍 Pasto, Nariño, Colombia</p>
                 <p>🌐 www.narino.gov.co</p>
               </div>

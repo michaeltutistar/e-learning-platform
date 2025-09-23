@@ -1,4 +1,4 @@
-#!C:\e-learning-platform\backend\backend-app\venv\Scripts\python.exe
+#!C:\Users\USUARIO\Projects\e-learning-platform\backend\backend-app\venv\Scripts\python.exe
 
 import sys
 import json

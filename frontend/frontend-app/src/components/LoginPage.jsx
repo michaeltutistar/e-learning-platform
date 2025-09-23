@@ -62,7 +62,7 @@ const LoginPage = () => {
     setErrors({})
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('https://by89bq27g7.execute-api.us-east-1.amazonaws.com/dev/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ const LoginPage = () => {
           <div className="flex justify-center items-center mb-4">
             <img src={logoGobernacion} alt="Gobernación de Nariño" className="h-16" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-800">Plataforma E-Learning</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Plataforma Emprendipaz</h1>
           <p className="text-gray-600">Gobernación de Nariño</p>
         </div>
 
@@ -222,9 +222,24 @@ const LoginPage = () => {
               <div className="text-center">
                 <p className="text-sm text-gray-600">
                   ¿No tienes una cuenta?{' '}
-                  <Link to="/register" className="text-green-600 hover:text-green-700 font-medium">
-                    Regístrate aquí
-                  </Link>
+                  {(() => {
+                    // Fecha objetivo: 30 de septiembre a las 8:00 AM
+                    const targetDate = new Date('2025-09-30T08:00:00')
+                    const now = new Date()
+                    const disabled = now < targetDate
+                    return disabled ? (
+                      <span 
+                        className="text-gray-400 cursor-not-allowed"
+                        title="Disponible a partir del 30 de septiembre a las 8:00 AM"
+                      >
+                        Regístrate aquí
+                      </span>
+                    ) : (
+                      <Link to="/register" className="text-green-600 hover:text-green-700 font-medium">
+                        Regístrate aquí
+                      </Link>
+                    )
+                  })()}
                 </p>
               </div>
             </form>

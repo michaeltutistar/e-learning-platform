@@ -1,0 +1,55 @@
+service: elearning-api
+
+provider:
+  name: aws
+  runtime: python3.10
+  region: us-east-1
+  environment:
+    RDS_ENDPOINT: "elearning-db.cwn4cmackagl.us-east-1.rds.amazonaws.com"
+    S3_BUCKET: "elearning-archivos"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+        - s3:DeleteObject
+      Resource: "arn:aws:s3:::elearning-archivos/*"
+
+functions:
+  api:
+    handler: lambda_function.lambda_handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors:
+            origin: "https://emprendimiento-narino.com"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Requested-With
+              - Accept
+              - Origin
+            allowCredentials: true
+      - http:
+          path: /
+          method: ANY
+          cors:
+            origin: "https://emprendimiento-narino.com"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Requested-With
+              - Accept
+              - Origin
+            allowCredentials: true
+
+plugins:
+  - serverless-wsgi
+  - serverless-python-requirements
+
+custom:
+  wsgi:
+    app: lambda_function.app
+  pythonRequirements:
+    dockerizePip: true

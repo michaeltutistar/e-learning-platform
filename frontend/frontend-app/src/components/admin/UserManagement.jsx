@@ -133,7 +133,7 @@ const UserManagement = () => {
         const url = window.URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        a.download = 'usuarios.csv'
+        a.download = 'usuarios_registrados.xlsx'
         document.body.appendChild(a)
         a.click()
         window.URL.revokeObjectURL(url)
@@ -189,7 +189,7 @@ const UserManagement = () => {
               onClick={handleExport}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
             >
-              📥 Exportar CSV
+              📥 Exportar Excel
             </button>
           </div>
         </div>

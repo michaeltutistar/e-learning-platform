@@ -8,11 +8,11 @@ const BulkUserImport = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0]
-    if (selectedFile && selectedFile.type === 'text/csv') {
+    if (selectedFile && (selectedFile.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || selectedFile.type === 'application/vnd.ms-excel')) {
       setFile(selectedFile)
       setError(null)
     } else {
-      setError('Por favor selecciona un archivo CSV válido')
+      setError('Por favor selecciona un archivo Excel válido')
       setFile(null)
     }
   }
@@ -57,11 +57,11 @@ Juan,Pérez,juan.perez@example.com,Password123,cedula_ciudadania,1234567890,estu
 María,García,maria.garcia@example.com,Password123,cedula_ciudadania,0987654321,instructor,activa
 Carlos,Rodríguez,carlos.rodriguez@example.com,Password123,cedula_ciudadania,1122334455,estudiante,inactiva`
     
-    const blob = new Blob([csvContent], { type: 'text/csv' })
+    const blob = new Blob([csvContent], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'template_usuarios.csv'
+    a.download = 'template_usuarios.xlsx'
     document.body.appendChild(a)
     a.click()
     window.URL.revokeObjectURL(url)
@@ -76,7 +76,7 @@ Carlos,Rodríguez,carlos.rodriguez@example.com,Password123,cedula_ciudadania,112
           📥 Registro Masivo de Usuarios
         </h2>
         <p className="text-gray-600">
-          Importa múltiples usuarios desde un archivo CSV
+          Importa múltiples usuarios desde un archivo Excel
         </p>
       </div>
 
@@ -86,7 +86,7 @@ Carlos,Rodríguez,carlos.rodriguez@example.com,Password123,cedula_ciudadania,112
           📋 Instrucciones para la Importación
         </h3>
         <div className="space-y-3 text-sm text-blue-800">
-          <p>• El archivo debe estar en formato CSV con las siguientes columnas:</p>
+          <p>• El archivo debe estar en formato Excel con las siguientes columnas:</p>
           <ul className="list-disc list-inside ml-4 space-y-1">
             <li><strong>nombre</strong> - Nombre del usuario (requerido)</li>
             <li><strong>apellido</strong> - Apellido del usuario (requerido)</li>
@@ -109,30 +109,30 @@ Carlos,Rodríguez,carlos.rodriguez@example.com,Password123,cedula_ciudadania,112
           📄 Descargar Plantilla
         </h3>
         <p className="text-gray-600 mb-4">
-          Descarga la plantilla CSV con el formato correcto para importar usuarios
+          Descarga la plantilla Excel con el formato correcto para importar usuarios
         </p>
         <button
           onClick={downloadTemplate}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
         >
-          📥 Descargar Template CSV
+          📥 Descargar Template Excel
         </button>
       </div>
 
       {/* Subir Archivo */}
       <div className="bg-white rounded-lg shadow-sm p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          📤 Subir Archivo CSV
+          📤 Subir Archivo Excel
         </h3>
         
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Seleccionar archivo CSV
+              Seleccionar archivo Excel
             </label>
             <input
               type="file"
-              accept=".csv"
+              accept=".xlsx,.xls"
               onChange={handleFileChange}
               className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
             />
