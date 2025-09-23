@@ -1,0 +1,56 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      # Instalar pnpm globalmente
+      - npm install -g pnpm@10.4.1
+      - echo "pnpm version:" && pnpm --version
+  
+  pre_build:
+    commands:
+      # Verificar versiones
+      - echo "Node version:" && node --version
+      - echo "NPM version:" && npm --version
+      
+      # Instalar dependencias
+      - echo "Installing dependencies..."
+      - pnpm install
+      
+      # Verificar que las dependencias se instalaron correctamente
+      - echo "Dependencies installed successfully"
+  
+  build:
+    commands:
+      # Construir el proyecto para producción
+      - echo "Building the project..."
+      - pnpm run build
+      
+      # Verificar que el build se completó
+      - echo "Build completed successfully"
+      - ls -la dist/
+
+  post_build:
+    commands:
+      # Sincronizar archivos con S3
+      - echo "Syncing files to S3..."
+      - aws s3 sync dist/ s3://elearning-frontend-prod-v2 --delete
+      
+      # Invalidar caché de CloudFront
+      - echo "Invalidating CloudFront cache..."
+      - aws cloudfront create-invalidation --distribution-id E3QN9WFZXCI4DS --paths "/*"
+      
+      - echo "Deployment completed successfully!"
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'dist'
+  name: frontend-build-$(date +%Y-%m-%d)
+
+cache:
+  paths:
+    - 'node_modules/**/*'
+    - '.pnpm-store/**/*'

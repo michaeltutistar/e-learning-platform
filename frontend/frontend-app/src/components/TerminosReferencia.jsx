@@ -86,7 +86,7 @@ const TerminosReferencia = () => {
     {
       id: 1,
       nombre: "TDR",
-      archivo: "1. TDR Ajustados.pdf",
+      archivo: "1. TDR.pdf",
       tipo: "pdf",
       descripcion: "Términos de Referencia del Programa EmprendiPaz"
     },
