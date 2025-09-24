@@ -318,3 +318,4 @@ Este proyecto fue desarrollado específicamente para la Gobernación de Nariño 
 
 **Nota:** Esta plataforma representa la fase inicial del proyecto e-learning. Las funcionalidades implementadas (landing page, registro y autenticación) constituyen la base sólida sobre la cual se pueden construir las características educativas avanzadas según las necesidades específicas de la Gobernación de Nariño.
 
+# Pipeline trigger
