@@ -15,7 +15,16 @@ phases:
       - echo "Node version:" && node --version
       - echo "NPM version:" && npm --version
       
-      # Navegar al directorio del frontend e instalar dependencias
+      # DEBUG: Verificar estructura del repositorio
+      - echo "=== DEBUG: Repository structure ==="
+      - pwd
+      - ls -la
+      - echo "=== Looking for frontend directory ==="
+      - find . -name "package.json" -type f
+      - echo "=== Looking for buildspec.yml ==="
+      - find . -name "buildspec.yml" -type f
+      
+      # Navegar al directorio correcto del frontend
       - echo "Navigating to frontend directory..."
       - cd frontend/frontend-app && pwd && ls -la
       - cd frontend/frontend-app && echo "Installing dependencies..." && pnpm install
