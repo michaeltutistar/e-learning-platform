@@ -15,6 +15,12 @@ phases:
       - echo "Node version:" && node --version
       - echo "NPM version:" && npm --version
       
+      # Navegar al directorio del frontend
+      - echo "Navigating to frontend directory..."
+      - cd frontend/frontend-app
+      - pwd
+      - ls -la
+      
       # Instalar dependencias
       - echo "Installing dependencies..."
       - pnpm install
@@ -24,6 +30,9 @@ phases:
   
   build:
     commands:
+      # Asegurarse de estar en el directorio correcto
+      - cd frontend/frontend-app
+      
       # Construir el proyecto para producción
       - echo "Building the project..."
       - pnpm run build
@@ -34,6 +43,9 @@ phases:
 
   post_build:
     commands:
+      # Asegurarse de estar en el directorio correcto
+      - cd frontend/frontend-app
+      
       # Sincronizar archivos con S3
       - echo "Syncing files to S3..."
       - aws s3 sync dist/ s3://elearning-frontend-prod-v2 --delete
@@ -47,10 +59,10 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: 'dist'
+  base-directory: 'frontend/frontend-app/dist'
   name: frontend-build-$(date +%Y-%m-%d)
 
 cache:
   paths:
-    - 'node_modules/**/*'
-    - '.pnpm-store/**/*'
+    - 'frontend/frontend-app/node_modules/**/*'
+    - 'frontend/frontend-app/.pnpm-store/**/*'
